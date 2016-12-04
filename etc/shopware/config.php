@@ -2,14 +2,14 @@
 
 return [
     'db' => [
-        'host' => getenv('MACB2B_MYSQL_1_ENV_MYSQL_HOSTNAME'),
-        'port' => getenv('MACB2B_MYSQL_1_ENV_MYSQL_PORT'),
-        'username' => getenv('MACB2B_MYSQL_1_ENV_MYSQL_USER'),
-        'password' => getenv('MACB2B_MYSQL_1_ENV_MYSQL_PASSWORD'),
-        'dbname' => getenv('MACB2B_MYSQL_1_ENV_MYSQL_DATABASE'),
+        'host' => getenv('MYSQL_HOSTNAME'),
+        'port' => getenv('MYSQL_PORT'),
+        'username' => getenv('MYSQL_USER'),
+        'password' => getenv('MYSQL_PASSWORD'),
+        'dbname' => getenv('MYSQL_DATABASE'),
     ],
     'es' => [
-        'enabled' => true,
+        'enabled' => getenv('ELASTIC_ENABLED') ? true : false,
         'client' => [
             'hosts' => [
                 getenv('ELASTIC_HOST') . ':' . getenv('ELASTIC_PORT')

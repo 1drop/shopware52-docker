@@ -2,3 +2,4 @@
 
 - include: entrypoint/mysql.yml
 - include: entrypoint/php.yml
+- include: entrypoint/cron.yml

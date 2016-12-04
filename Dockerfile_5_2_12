@@ -12,7 +12,7 @@ COPY etc/             /opt/docker/etc/
 RUN rm /opt/docker/etc/nginx/vhost.common.d/10-location-root.conf
 COPY provision/       /opt/docker/provision/
 
-RUN /opt/docker/bin/provision add --tag bootstrap --tag entrypoint boilerplate-main boilerplate-main-development boilerplate-deployment \
+RUN /opt/docker/bin/provision add --tag bootstrap --tag entrypoint boilerplate-main boilerplate-main-development \
     && /opt/docker/bin/bootstrap.sh
 
 RUN /usr/local/bin/apt-install ant
@@ -28,10 +28,10 @@ RUN curl -o /usr/local/bin/phpunit -L https://phar.phpunit.de/phpunit.phar \
 # Configure volume/workdir
 RUN mkdir -p /app/
 WORKDIR /app/
-RUN git clone --depth 1 -b 5.2 https://github.com/shopware/shopware.git /app/ \
-    && echo "5.2 git-$(git rev-parse --short HEAD)" > recovery/install/data/version \
+RUN git clone --depth 1 -b "v5.2.12" https://github.com/shopware/shopware.git /app/ \
+    && echo "5.2.12" > recovery/install/data/version \
     && sed -i 's/\_\_\_VERSION\_\_\_/5.2/g' engine/Shopware/Application.php \
-    && sed -i 's/\_\_\_VERSION\_TEXT\_\_\_/GIT/g' engine/Shopware/Application.php \
-    && sed -i "s/\_\_\_REVISION\_\_\_/$(git rev-parse --short HEAD)/g" engine/Shopware/Application.php \
+    && sed -i 's/\_\_\_VERSION\_TEXT\_\_\_//g' engine/Shopware/Application.php \
+    && sed -i "s/\_\_\_REVISION\_\_\_/GIT/g" engine/Shopware/Application.php \
     && composer install
 RUN chown -R application:application /app/

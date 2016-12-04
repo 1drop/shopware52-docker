@@ -1,1 +1,2 @@
 # m h  dom mon dow  user  command
+* * * * * application . /opt/project_env.sh; php /app/bin/console sw:cron:run

@@ -9,16 +9,4 @@
 #######################################
 # Context environment
 
-# TYPO3
-TYPO3_CONTEXT=Production/Docker
 SHOPWARE_ENV=production
-
-# Symfony
-SYMFONY_ENV=prod
-SYMFONY_DEBUG=0
-
-# CakePHP
-CAKE_ENV=prod
-
-# yii
-YII_ENVIRONMENT=Production

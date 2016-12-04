@@ -1,0 +1,9 @@
+
+- name: Generate cron environment file
+  shell: printenv | sed 's/^\(.*\)$/export \1/g' > /opt/project_env.sh
+
+- name: Permissions of cron env file
+  file:
+    path: '/opt/project_env.sh'
+    state: touch
+    mode: '0755'
