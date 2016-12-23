@@ -5,7 +5,7 @@ Based on the [php-docker-boilerplate](https://github.com/webdevops/php-docker-bo
 Image contains:
 
  - Ubuntu 16.04
- - PHP7 (=> no ioncube!!!)
+ - PHP7 (including ionCube)
  - Nginx (with shopware optimized configuration)
  - Tag for recent shopware versions (5.2 branch only)
  - latest 5.2-git revision (built on commit to shopware/shopware)

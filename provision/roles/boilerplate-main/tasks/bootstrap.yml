@@ -29,6 +29,7 @@
   when: MAIL is defined
 
 - include: bootstrap/php.yml
+- include: bootstrap/ioncube.yml
 
 - include: bootstrap/web.apache.yml
 
