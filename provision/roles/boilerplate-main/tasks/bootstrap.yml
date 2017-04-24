@@ -9,9 +9,6 @@
 # Run tasks
 #############################
 
-- include: bootstrap/systemUpdate.centos.yml
-  when: PROVISION.systemUpdate is defined and PROVISION.systemUpdate and ansible_distribution == 'CentOS'
-
 - include: bootstrap/systemUpdate.ubuntu.yml
   when: PROVISION.systemUpdate is defined and PROVISION.systemUpdate and ansible_distribution == 'Ubuntu'
 
