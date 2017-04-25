@@ -18,7 +18,32 @@ Or the latest git build:
 
 	1drop/shopware-52:latest
 
-## Future improvements
+## ENV variables
 
-- Install profiling tools for debug (Profiler, Clockwork)
-- Include configuration respecting ENV variables (and document them)
+Special ENV variables have been introduced to configure shopware via docker.
+
+| ENV             | Description                        | Example       |
+|-----------------|------------------------------------|---------------|
+| MYSQL_HOSTNAME  | Hostname or IP to connect to mysql | database.host |
+| MYSQL_PORT      | Port to connect to mysql           | 3306          |
+| MYSQL_USER      | Username                           | dbuser        |
+| MYSQL_PASSWORD  | Password                           | dbpass        |
+| MYSQL_DATABASE  | Database                           | shopware      |
+| ELASTIC_ENABLED | Enable elasticsearch               | true          |
+| ELASTIC_HOST    | Hostname or IP to connect to es    | elastic.host  |
+| ELASTIC_PORT    | Port to connect to elasticsearch   | 9200          |
+
+
+## Additional configuration
+
+Mount a folder to `/app/conf.d/` and place any PHP script in the form of
+
+	<?php
+	return [
+		'errorHandler' => [
+        	'throwOnRecoverableError' => true,
+    	],
+	];
+
+inside the `conf.d` folder. This configuration will overrule all previous set
+configuration parts of the configuration array (uses `array_replace_recursive` internally).

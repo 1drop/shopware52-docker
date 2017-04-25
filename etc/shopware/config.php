@@ -1,6 +1,6 @@
 <?php
 
-return [
+$additionalConfiguration = [
     'db' => [
         'host' => getenv('MYSQL_HOSTNAME'),
         'port' => getenv('MYSQL_PORT'),
@@ -17,3 +17,10 @@ return [
         ]
     ],
 ];
+
+$configurationFiles = glob(__DIR__ . '/conf.d/*.php');
+foreach ($configurationFiles as $file) {
+    $additionalConfiguration = array_replace_recursive($additionalConfiguration, require($file));
+}
+
+return $additionalConfiguration;

@@ -1,4 +1,0 @@
----
-
-- include: bootstrap/php-blackfire/debian.yml
-  when: ansible_distribution == 'Debian' and PROVISION.install.phpBlackfire is defined and PROVISION.install.phpBlackfire

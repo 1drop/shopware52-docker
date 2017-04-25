@@ -1,10 +1,7 @@
 <?php
-$defaultConfig = require 'config.php';
+$additionalConfiguration = require 'config.php';
 
-return [
-    'db' => $defaultConfig['db'],
-    'es' => $defaultConfig['es'],
-
+$additionalConfiguration = array_replace_recursive($defaultConfig, [
     'errorHandler' => [
         'throwOnRecoverableError' => true,
     ],
@@ -13,7 +10,7 @@ return [
         'frontend' => false,
         'backend' => false
     ],
-    
+
     'front' => [
         'throwExceptions' => true,
         'showException' => true,
@@ -27,4 +24,11 @@ return [
     'model' => [
         'cacheProvider' => 'array'
     ],
-];
+]);
+
+$configurationFiles = glob(__DIR__ . '/conf.d/*.php');
+foreach ($configurationFiles as $file) {
+    $additionalConfiguration = array_replace_recursive($additionalConfiguration, require($file));
+}
+
+return $additionalConfiguration;
