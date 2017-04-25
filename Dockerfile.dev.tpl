@@ -46,6 +46,6 @@ RUN git clone --depth 1 -b "v{{SHOPWARE_VERSION}}" https://github.com/shopware/s
     && echo "{{SHOPWARE_VERSION}}" > recovery/install/data/version \
     && sed -i 's/\_\_\_VERSION\_\_\_/{{SHOPWARE_VERSION}}/g' engine/Shopware/Application.php \
     && sed -i 's/\_\_\_VERSION\_TEXT\_\_\_//g' engine/Shopware/Application.php \
-    && sed -i "s/\_\_\_REVISION\_\_\_/$(git rev-parse --short HEAD)/g" engine/Shopware/Application.php \
+    && sed -i "s/\_\_\_REVISION\_\_\_/$(git rev-parse --short HEAD)/g" engine/Shopware/Application.php
 RUN composer install --no-interaction --no-progress -a
 RUN chown -R application:application /app/
