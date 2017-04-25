@@ -13,7 +13,7 @@ ENV WEB_NO_CACHE_PATTERN "\.(css|js|gif|png|jpg|svg)$"
 
 # Deploy scripts/configurations
 COPY etc/             /opt/docker/etc/
-COPY provision/       /opt/docker/provision/
+COPY provision/       /opt/docker/bin/
 
 RUN mv /opt/docker/etc/php/development.ini /opt/docker/etc/php/php.ini
 
