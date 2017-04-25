@@ -17,7 +17,7 @@ COPY provision/       /opt/docker/bin/
 RUN mv /opt/docker/etc/php/production.ini /opt/docker/etc/php/php.ini
 
 # Install ioncube
-RUN chmod +x /opt/docker/etc/php/ioncube.sh && /opt/docker/etc/php/ioncube.sh
+RUN chmod +x /opt/docker/etc/php/ioncube.sh; sync; /opt/docker/etc/php/ioncube.sh
 
 # Install additional packages
 RUN /usr/local/bin/apt-install apt-utils mysql-client php-imagick
