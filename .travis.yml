@@ -28,14 +28,11 @@ env:
 install: true
 
 before_script:
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
 
 script:
   - php prepare.php
-
-after_success:
   - export IMAGE=1drop/shopware:$SHOPWARE_VERSION
-  - export IMAGE=$IMAGE:$([ $TRAVIS_PHP_VERSION == '7.0' ] && "-dev")
   - if [ "$TRAVIS_PHP_VERSION" == '7.0' ]; then export IMAGE=$IMAGE"-dev"; fi
   - docker build -f Dockerfile -t $IMAGE .
   - docker push $IMAGE
