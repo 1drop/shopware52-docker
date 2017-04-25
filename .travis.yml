@@ -6,7 +6,6 @@ services:
 language: php
 
 php:
-  - 7.0
   - 7.1
 
 env:
@@ -37,6 +36,9 @@ before_script:
 script:
   - php prepare.php
   - export IMAGE=1drop/shopware:$SHOPWARE_VERSION
-  - if [ "$TRAVIS_PHP_VERSION" == '7.0' ]; then export IMAGE=$IMAGE"-dev"; fi
+  - docker build -f Dockerfile -t $IMAGE .
+  - docker push $IMAGE
+  - php prepare.php dev
+  - export IMAGE=$IMAGE"-dev"
   - docker build -f Dockerfile -t $IMAGE .
   - docker push $IMAGE

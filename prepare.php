@@ -6,7 +6,7 @@
  *      produces production builds (as docker building is independant from CI CLI).
  */
 
-$isDev = (float)phpversion() < 7.1;
+$isDev = isset($argv[1]) && $argv[1] === 'dev';
 $shopwareVersion = getenv('SHOPWARE_VERSION');
 
 if ($isDev) {
