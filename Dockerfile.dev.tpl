@@ -47,7 +47,5 @@ RUN git clone --depth 1 -b "v{{SHOPWARE_VERSION}}" https://github.com/shopware/s
     && sed -i 's/\_\_\_VERSION\_\_\_/{{SHOPWARE_VERSION}}/g' engine/Shopware/Application.php \
     && sed -i 's/\_\_\_VERSION\_TEXT\_\_\_//g' engine/Shopware/Application.php \
     && sed -i "s/\_\_\_REVISION\_\_\_/$(git rev-parse --short HEAD)/g" engine/Shopware/Application.php
-# Dev requirements temporary disabled because of segfault
-# RUN composer install --no-interaction --no-progress -a
-RUN composer install --no-dev --no-interaction --no-progress -a
+RUN composer install --no-interaction --no-progress -a
 RUN chown -R application:application /app/

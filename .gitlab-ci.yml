@@ -1,0 +1,16 @@
+
+
+dev:
+  image: 1drop/docker:git
+  variables:
+    SHOPWARE_VERSION: 5.2.10
+  before_script:
+    - apk add jq
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  script:
+    - docker build -f Dockerfile -t 1drop/shopware:$SHOPWARE_VERSION .
+    - docker push 1drop/shopware:$SHOPWARE_VERSION
+
+prod:
+  image: 1drop/docker:git
+  variables:
