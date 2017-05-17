@@ -9,6 +9,7 @@ dev:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
   script:
     - python build.py
+  when: manual
 
 prod:
   image: 1drop/docker:git
@@ -16,3 +17,4 @@ prod:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
   script:
     - python build.py
+  when: manual
