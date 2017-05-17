@@ -1,19 +1,27 @@
 <?php
 
-/*
- *      To speed up the build process using travis matrix combinations
- *      we introduce the convention that PHP 7.0 produces dev builds and 7.1
- *      produces production builds (as docker building is independant from CI CLI).
- */
-
-$isDev = (float)phpversion() < 7.1;
-$shopwareVersion = getenv('SHOPWARE_VERSION');
-
+$isDev = getenv('IS_DEV');
 if ($isDev) {
     $dockerfile = file_get_contents('Dockerfile.dev.tpl');
 } else {
     $dockerfile = file_get_contents('Dockerfile.prod.tpl');
 }
 
-$dockerfile = str_replace('{{SHOPWARE_VERSION}}', $shopwareVersion, $dockerfile);
-file_put_contents('Dockerfile', $dockerfile);
+$opts = ['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP']]];
+$context = stream_context_create($opts);
+$shopwareTags = json_decode(file_get_contents('https://api.github.com/repos/shopware/shopware/tags', false, $context), true);
+
+foreach ($shopwareTags as $shopwareTag) {
+    $tag = $shopwareTag['name'];
+    // Ignore version tags like -RC etc.
+    if (preg_match('/v(\d+\.\d+\.\d+)$/', $tag, $m)) {
+        $shopwareVersion = $m[1];
+        $dockerfile = str_replace('{{SHOPWARE_VERSION}}', $shopwareVersion, $dockerfile);
+        file_put_contents('Dockerfile', $dockerfile);
+        $image = '1drop/shopware:' . $shopwareVersion;
+        $image = ($isDev) ? $image . '-dev' : $image;
+        echo 'BUILDING IMAGE: ' . $image . PHP_EOL;
+        system('docker build -f Dockerfile -t 1drop/shopware:' . $shopwareVersion . ' .');
+        system('docker push 1drop/shopware:' . $shopwareVersion);
+    }
+}

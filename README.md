@@ -8,15 +8,12 @@ Image contains:
  - PHP7 (including ionCube)
  - Nginx (with shopware optimized configuration)
  - Tag for recent shopware versions (5.2 branch only)
- - latest 5.2-git revision (built on commit to shopware/shopware)
 
 Use an image like e.g.:
 
-	1drop/shopware-52:5.2.12
+	1drop/shopware:5.2.12
 
-Or the latest git build:
-
-	1drop/shopware-52:latest
+Or the dev image which includes XDebug, PHPUnit and many more
 
 ## ENV variables
 
