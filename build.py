@@ -21,7 +21,7 @@ if __name__ == '__main__':
         dockerfileTmpl = open('Dockerfile.prod.tpl', 'r').read()
     jobs = []
     # Warm up cache layers
-    buildWorker(dockerfileTmpl, '5.2.0', isDev)
+    buildWorker(dockerfileTmpl, '5.2.24', isDev)
     for version in data:
         m = re.search('^v(\d+\.\d+\.\d+)$', version['name'])
         if m:

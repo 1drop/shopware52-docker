@@ -42,7 +42,9 @@ RUN curl -o /usr/local/bin/phpunit -L https://phar.phpunit.de/phpunit.phar \
 # Configure volume/workdir
 RUN mkdir -p /app/
 WORKDIR /app/
-RUN git clone --depth 1 -b "v{{SHOPWARE_VERSION}}" https://github.com/shopware/shopware.git /app/ \
+COPY shopware /app/
+RUN git checkout "v{{SHOPWARE_VERSION}}" \
+    && rm -rf .git \
     && echo "{{SHOPWARE_VERSION}}" > recovery/install/data/version \
     && sed -i 's/\_\_\_VERSION\_\_\_/{{SHOPWARE_VERSION}}/g' engine/Shopware/Application.php \
     && sed -i 's/\_\_\_VERSION\_TEXT\_\_\_//g' engine/Shopware/Application.php \

@@ -25,11 +25,13 @@ RUN /usr/local/bin/apt-install apt-utils mysql-client php-imagick
 # Configure volume/workdir
 RUN mkdir -p /app/
 WORKDIR /app/
-RUN git clone --depth 1 -b "v{{SHOPWARE_VERSION}}" https://github.com/shopware/shopware.git /app/ \
+COPY shopware /app/
+RUN git checkout "v{{SHOPWARE_VERSION}}" \
+    && rm -rf .git \
     && echo "{{SHOPWARE_VERSION}}" > recovery/install/data/version \
     && sed -i 's/\_\_\_VERSION\_\_\_/{{SHOPWARE_VERSION}}/g' engine/Shopware/Application.php \
     && sed -i 's/\_\_\_VERSION\_TEXT\_\_\_//g' engine/Shopware/Application.php \
     && sed -i "s/\_\_\_REVISION\_\_\_/$(git rev-parse --short HEAD)/g" engine/Shopware/Application.php
 RUN composer install --no-dev --no-interaction --no-progress -a
-RUN touch /app/recovery/install/data/install.lock
-RUN chown -R application:application /app/
+RUN touch /app/recovery/install/data/install.lock \
+    && chown -R application:application /app/
